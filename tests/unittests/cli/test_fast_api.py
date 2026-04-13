@@ -897,7 +897,7 @@ def test_app_with_a2a(
 def test_list_apps(test_app):
   """Test listing available applications."""
   # Use the TestClient to make a request
-  response = test_app.get("/list-apps")
+  response = test_app.get("/list-apps?detailed=false")
 
   # Verify the response
   assert response.status_code == 200
@@ -908,7 +908,7 @@ def test_list_apps(test_app):
 
 def test_list_apps_detailed(test_app):
   """Test listing available applications with detailed metadata."""
-  response = test_app.get("/list-apps?detailed=true")
+  response = test_app.get("/list-apps")
 
   assert response.status_code == 200
   data = response.json()
