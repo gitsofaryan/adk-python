@@ -1011,12 +1011,12 @@ class TestAgentLoader:
     """Test that list_agents only returns directories containing valid agent files."""
     with tempfile.TemporaryDirectory() as temp_dir:
       temp_path = Path(temp_dir)
-      
+
       # Create valid agent 1
       agent1_dir = temp_path / "valid_agent1"
       agent1_dir.mkdir()
       (agent1_dir / "__init__.py").write_text("root_agent = None")
-      
+
       # Create valid agent 2
       agent2_dir = temp_path / "valid_agent2"
       agent2_dir.mkdir()
@@ -1026,19 +1026,18 @@ class TestAgentLoader:
       agent3_dir = temp_path / "valid_agent3"
       agent3_dir.mkdir()
       (agent3_dir / "root_agent.yaml").write_text("name: test")
-      
+
       # Create invalid directories
       (temp_path / "utils").mkdir()
       (temp_path / "data").mkdir()
       (temp_path / "tmp").mkdir()
-      
+
       loader = AgentLoader(str(temp_path))
       agent_names = loader.list_agents()
-      
+
       assert len(agent_names) == 3
       assert "valid_agent1" in agent_names
       assert "valid_agent2" in agent_names
       assert "valid_agent3" in agent_names
       assert "utils" not in agent_names
       assert "data" not in agent_names
-
